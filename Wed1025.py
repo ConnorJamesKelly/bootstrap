@@ -145,13 +145,16 @@ df = pd.DataFrame({'x': boot_stat})
 
 
 
-
-
-
-#HI!
-
-
-
+class BootCI (self):
+    
+    def __init__(self):
+        
+        self.stat = "mean"
+        self.dat = None
+        self.nboot = 0
+        self.bootstat = None
+        self.ci_level = .95
+    
 
 
 
