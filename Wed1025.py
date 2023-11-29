@@ -145,31 +145,33 @@ df = pd.DataFrame({'x': boot_stat})
 
 
 
-class BootCI (self):
+class BootCI:
     
     def __init__(self):
         
         self.stat = "mean"
         self.dat = None
-        self.nboot = 0
+        self.n_boot = 0
         self.bootstat = None
         self.ci_level = .95
         self.sim_list = []
     
     
     def simulation(self):
-                
-        for i in range(self.nboot):
+    #for loop
+    #Adds sims to overall list
+        n = len(self.dat)
+        for i in range(self.n_boot):
             
-            boot_sample = dat.sample(26, replace = True)
+            boot_sample = self.dat.sample(n, replace = True)
             
-            if stat == "median":
+            if self.stat == "median":
                 self.sim_list.append(float(boot_sample.median()))
             
-            elif stat == "mean":
+            elif self.stat == "mean":
                 self.sim_list.append(float(boot_sample.mean()))
             
-            elif stat == "std dev":
+            elif self.stat == "std dev":
                 self.sim_list.append(float(boot_sample.std()))
                 
             else:
@@ -177,13 +179,29 @@ class BootCI (self):
            
                 
     def clear_sims (self):
+        #clears the sims list
         self.sim_list = []
+        
+    def set_data(self, dat):
+        #set the data
+        self.data = dat
+    
+    def set_n_boot(self, n_boot):
+        #set the n boot
+        self.n_boot = n_boot
+    
+    def set_stat(self, stat):
+        #set the stats
+        self.stat = stat
 
 
 
-
-
-
+test = BootCI()
+test.dat = pd.read_csv("2017_Fuel_Economy_Data.csv")
+test.dat = test.dat["Combined Mileage (mpg)"]
+test.n_boot = 10000
+test.simulation()
+print(test.sim_list)
 
 
 
